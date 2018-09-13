@@ -1,17 +1,11 @@
-class Game
-	
-	# needs "play"  (set grid point) method
-	# needs "is won?" method
-	#
-	# _____ --------------- 
-	#| | | |
-	#| | | |
-	#| | | |
-	#-------
+class Game	
 
 	def initialize
 		@grid = [[" "," "," "],[" "," "," "],[" "," "," "]]
 		@myturn = true
+		displayHelp()
+		displayGrid()
+		play()
 	end
 
 	def resetGrid
@@ -50,8 +44,30 @@ class Game
 	end
 
 	def iswon?
+		@grid.each do |line|
+			if line == ["X","X","X"] || line == ["O","O","O"]
+				return true
+			end
+		end
 
+		i = 0
+		while i<2
+			if(@grid[0][i]=="X"&&@grid[1][i]=="X"&&@grid[2][i]=="X")
+				return true
+			elsif(@grid[0][i]=="O"&&@grid[1][i]=="O"&&@grid[2][i]=="O")
+			end
+			i+=1
+		end
 
+		if(@grid[0][0]=="X"&&@grid[1][1]=="X"&&@grid[2][2]=="X")
+			return true
+		elsif(@grid[0][0]=="O"&&@grid[1][1]=="O"&&@grid[2][2]=="O")
+			return true
+		elsif(@grid[0][2]=="X"&&@grid[1][1]=="X"&&@grid[2][0]=="X")
+			return true
+		elsif(@grid[0][2]=="O"&&@grid[1][1]=="O"&&@grid[2][0]=="O")
+			return true
+		end
 		return false
 	end
 
@@ -99,6 +115,21 @@ class Game
 
 			displayGrid()
 		end
+
+		if(@myturn)
+			puts "O wins!"
+		else
+			puts "X wins!"
+		end
+		puts " "
+		puts "Play again (y)?"
+		playagain = gets.chomp
+		if playagain == "y"
+			resetGrid()
+			displayHelp()
+			displayGrid()
+			play()
+		end
 	end
 
 
@@ -109,7 +140,4 @@ end
 
 newgame = Game.new()
 
-newgame.resetGrid()
-newgame.displayHelp()
-newgame.displayGrid()
-newgame.play()
+
